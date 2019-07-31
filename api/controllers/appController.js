@@ -35,6 +35,7 @@ exports.mo = (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(ussd.ussdMoContinue, null, 3)); 
     }
-
-    //res.send('OK');
+    else {
+        res.send('OK');
+    }
 };
