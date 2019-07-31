@@ -26,7 +26,7 @@ exports.mo = (req, res) => {
         outJson.sessionID = inJson.sessionID;
         outJson.keyword = inJson.keyword;
         outJson.shortCode = inJson.shortCode;
-        outJson.outboundUSSDMessage = " Login to service?\n1. Ok\n2. Cancel ";
+        outJson.outboundUSSDMessage = "Hello dude! Select your choice\n1. Pork\n2. Beef \n3. Cancel";
         outJson.clientCorrelator = inJson.clientCorrelator;
         outJson.responseRequest.notifyURL = inJson.responseRequest.notifyURL;
         outJson.responseRequest.callbackData = inJson.responseRequest.callbackData;
