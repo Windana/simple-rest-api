@@ -14,6 +14,8 @@ exports.mo = (req, res) => {
     if(method == 'POST') {
         var ussdAction = body.inboundUSSDMessageRequest.ussdAction;
         log.info('ussdAction | ', ussdAction, ' | at: ', new Date().toJSON());
+
+
     }
 
     res.send('OK');
