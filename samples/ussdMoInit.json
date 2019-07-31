@@ -1,0 +1,15 @@
+{
+    "inboundUSSDMessageRequest": {
+        "address": "tel:+94771004989",
+        "sessionID": "B66D71004C29F59CFCD2EB8AD0C21317",
+        "shortCode": "7782",
+        "keyword": "8",
+        "inboundUSSDMessage": null,
+        "clientCorrelator": "94771004989-B66D71004C29F59CFCD2EB8AD0C21317",
+        "responseRequest": {
+            "notifyURL": "http: //52.40.47.177:8080/mo",
+            "callbackData": null
+        },
+        "ussdAction": "moinit"
+    }
+}
