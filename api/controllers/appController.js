@@ -20,8 +20,7 @@ exports.mo = (req, res) => {
         
         var inJson = body.inboundUSSDMessageRequest;
         var outJson = ussd.ussdMoContinue.outboundUSSDMessageRequest;
-        ussd.ussdMoContinue.outboundUSSDMessageRequest = outJson;    
-
+        
         outJson.address = inJson.address;
         outJson.sessionID = inJson.sessionID;
         outJson.keyword = inJson.keyword;
@@ -30,8 +29,10 @@ exports.mo = (req, res) => {
         outJson.clientCorrelator = inJson.clientCorrelator;
         outJson.responseRequest.notifyURL = inJson.responseRequest.notifyURL;
         outJson.responseRequest.callbackData = inJson.responseRequest.callbackData;
-        outJson.ussdAction = "mtfin";
+        outJson.ussdAction = "mocont";
     
+        ussd.ussdMoContinue.outboundUSSDMessageRequest = outJson;    
+
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(ussd.ussdMoContinue, null, 3)); 
     }
