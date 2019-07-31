@@ -1,5 +1,6 @@
 'use strict';
 const log = require('simple-node-logger').createSimpleLogger('project.log');
+const ussd = require('../../reqres/ussdMoContinue');
 
 exports.mo = (req, res) => {
 
@@ -15,8 +16,25 @@ exports.mo = (req, res) => {
         var ussdAction = body.inboundUSSDMessageRequest.ussdAction;
         log.info('ussdAction | ', ussdAction, ' | at: ', new Date().toJSON());
 
+        //Manipulate the response:
+        
+        var inJson = body.inboundUSSDMessageRequest;
+        var outJson = ussd.ussdMoContinue.outboundUSSDMessageRequest;
+        ussd.ussdMoContinue.outboundUSSDMessageRequest = outJson;    
 
+        outJson.address = inJson.address;
+        outJson.sessionID = inJson.sessionID;
+        outJson.keyword = inJson.keyword;
+        outJson.shortCode = inJson.shortCode;
+        outJson.outboundUSSDMessage = " Login to service?\n1. Ok\n2. Cancel ";
+        outJson.clientCorrelator = inJson.clientCorrelator;
+        outJson.responseRequest.notifyURL = inJson.responseRequest.notifyURL;
+        outJson.responseRequest.callbackData = inJson.responseRequest.callbackData;
+        outJson.ussdAction = "mocont";
+    
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(ussd.ussdMoContinue, null, 3)); 
     }
 
-    res.send('OK');
+    //res.send('OK');
 };
