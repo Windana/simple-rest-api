@@ -48,6 +48,7 @@ exports.mo = (req, res) => {
                     break;
                 case "3": log.info('1.3 Menu');
                     outJson.outboundUSSDMessage = "Select your choice\n1. Opt5\n2. Opt6 \n3. Cancel";
+                    outJson.ussdAction = "mtfin";
                     break;
             }
         }
