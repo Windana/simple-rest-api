@@ -30,7 +30,7 @@ exports.mo = (req, res) => {
         outJson.clientCorrelator = inJson.clientCorrelator;
         outJson.responseRequest.notifyURL = inJson.responseRequest.notifyURL;
         outJson.responseRequest.callbackData = inJson.responseRequest.callbackData;
-        outJson.ussdAction = "mocont";
+        outJson.ussdAction = "mtfin";
     
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(ussd.ussdMoContinue, null, 3)); 
