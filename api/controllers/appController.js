@@ -11,44 +11,50 @@ exports.mo = (req, res) => {
     log.info('url | ', url, ' | at: ', new Date().toJSON());
     log.info('headers | ', headers, ' | at: ', new Date().toJSON());
     log.info('body | ', body, ' | at: ', new Date().toJSON());
-    
-    if(method == 'POST') {
+
+    if (method == 'POST') {
         var ussdAction = body.inboundUSSDMessageRequest.ussdAction;
         log.info('ussdAction | ', ussdAction, ' | at: ', new Date().toJSON());
 
         //Manipulate the response:
-        
+
         var inJson = body.inboundUSSDMessageRequest;
         var outJson = ussd.ussdMoContinue.outboundUSSDMessageRequest;
-        
-        if(inJson.inboundUSSDMessage == null) {
+
+
+        outJson.address = inJson.address;
+        outJson.sessionID = inJson.sessionID;
+        outJson.keyword = inJson.keyword;
+        outJson.shortCode = inJson.shortCode;
+        outJson.clientCorrelator = inJson.clientCorrelator;
+        outJson.responseRequest.notifyURL = inJson.responseRequest.notifyURL;
+        outJson.responseRequest.callbackData = inJson.responseRequest.callbackData;
+        outJson.ussdAction = "mocont";
+
+
+        if (inJson.inboundUSSDMessage == null) {
             // 1st Menu
-            
             log.info('1st Menu');
-
-            outJson.address = inJson.address;
-            outJson.sessionID = inJson.sessionID;
-            outJson.keyword = inJson.keyword;
-            outJson.shortCode = inJson.shortCode;
             outJson.outboundUSSDMessage = "Hello dude! Select your choice\n1. Pork\n2. Beef \n3. Cancel";
-            outJson.clientCorrelator = inJson.clientCorrelator;
-            outJson.responseRequest.notifyURL = inJson.responseRequest.notifyURL;
-            outJson.responseRequest.callbackData = inJson.responseRequest.callbackData;
-            outJson.ussdAction = "mocont";
-        
-            ussd.ussdMoContinue.outboundUSSDMessageRequest = outJson;    
-
-            res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify(ussd.ussdMoContinue, null, 3)); 
         }
         else {
 
-            switch(inJson.inboundUSSDMessage) {
-                case "1": log.info('1.1 Menu'); break;
-                case "2": log.info('1.2 Menu'); break;
-                case "3": log.info('1.3 Menu'); break;
+            switch (inJson.inboundUSSDMessage) {
+                case "1": log.info('1.1 Menu');
+                    outJson.outboundUSSDMessage = "Select your choice\n1. Opt1\n2. Opt2 \n3. Cancel";
+                    break;
+                case "2": log.info('1.2 Menu');
+                    outJson.outboundUSSDMessage = "Select your choice\n1. Opt3\n2. Opt4 \n3. Cancel";
+                    break;
+                case "3": log.info('1.3 Menu');
+                    outJson.outboundUSSDMessage = "Select your choice\n1. Opt5\n2. Opt6 \n3. Cancel";
+                    break;
             }
         }
+
+        ussd.ussdMoContinue.outboundUSSDMessageRequest = outJson;
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(ussd.ussdMoContinue, null, 3));
     }
     else {
         res.send('OK');
